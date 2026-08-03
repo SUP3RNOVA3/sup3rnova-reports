@@ -154,4 +154,4 @@ async function handler(req, res) {
   }
 }
 
-http.createServer(handler).listen(PORT, '0.0.0.0', () => console.log('SUP3RNOVA Reports listening on ' + PORT));
+http.createServer(handler).listen(PORT, () => console.log('SUP3RNOVA Reports listening on ' + PORT));
