@@ -20,7 +20,7 @@ Recommended canonical slug after the prototype: `hottest-brunch`. The requested 
 
 ## Proposed Supabase Lab tables
 
-No tables are applied during the UX/UI phase.
+The tables below are applied in Supabase Lab through `supabase/migrations/001_reporting_core.sql`.
 
 - `report_projects`: report identity, slug, client, brand, campaign dates, visibility, theme
 - `report_sources`: scraper/provider configuration and last successful sync
