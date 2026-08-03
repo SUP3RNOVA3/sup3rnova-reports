@@ -21,6 +21,7 @@
 
       <nav class="main-nav" aria-label="Report sections">
         <button class="nav-item active" data-view="overview"><span>⌁</span> Overview</button>
+        <button class="nav-item" data-view="deck"><span>▤</span> Creator deck <i class="live-nav-tag">LIVE</i></button>
         <button class="nav-item" data-view="content"><span>▦</span> Content library</button>
         <button class="nav-item" data-view="creators"><span>◎</span> Creators</button>
         <button class="nav-item" data-view="benchmarks"><span>⌗</span> Benchmarks & EMV</button>
@@ -28,7 +29,7 @@
       </nav>
 
       <div class="sidebar-foot">
-        <div class="sync-card"><span class="sync-dot"></span><div><strong>TikHub sync</strong><small>Prototype data</small></div></div>
+        <div class="sync-card"><span class="sync-dot"></span><div><strong>TikHub sync</strong><small>Supabase live dataset</small></div></div>
         <p>Prepared by <strong>SUP3RNOVA</strong></p>
       </div>
     </aside>
@@ -57,7 +58,7 @@
             <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
             <div class="pepper">HOT<br>TAKE</div>
           </div>
-          <div class="hero-meta"><span>REPORTING WINDOW</span><strong>JUL 31 - AUG 07</strong><small>Last mock sync: 2 min ago</small></div>
+          <div class="hero-meta"><span>REPORTING WINDOW</span><strong>JUL 31 - AUG 07</strong><small>Live campaign dataset</small></div>
         </div>
 
         <div class="section-heading"><div><span>CAMPAIGN PULSE</span><h2>Performance at a glance</h2></div><button class="text-btn" data-jump="benchmarks">View methodology →</button></div>
@@ -106,8 +107,18 @@
         <div class="social-showcase" id="socialShowcase"></div>
       </section>
 
+      <section class="view" id="view-deck">
+        <div class="page-title deck-page-title">
+          <div><span>LIVE CREATOR REPORT</span><h1>One creator. One story.</h1><p>A presentation-ready view pairing each influencer snapshot with the content they generated.</p></div>
+          <div class="deck-pagination"><button id="deckPrev" aria-label="Previous creator">←</button><strong id="deckCounter">01 / 01</strong><button id="deckNext" aria-label="Next creator">→</button></div>
+        </div>
+        <div class="deck-selector" id="deckSelector" aria-label="Select creator"></div>
+        <article class="creator-deck" id="creatorDeck"></article>
+        <div class="deck-footnote"><span>LIVE DATA</span><p>Profiles and media come from the campaign dataset. Publicly unavailable metrics remain labeled as unavailable and are not estimated.</p></div>
+      </section>
+
       <section class="view" id="view-content">
-        <div class="page-title"><div><span>CONTENT LIBRARY</span><h1>Every piece, one view.</h1><p>Browse normalized media across Instagram and TikTok. Metrics shown are prototype fixtures.</p></div><button class="primary-btn">Export CSV</button></div>
+        <div class="page-title"><div><span>CONTENT LIBRARY</span><h1>Every piece, one view.</h1><p>Browse approved, normalized media across Instagram and TikTok. Missing public metrics remain unavailable.</p></div><button class="primary-btn">Export CSV</button></div>
         <div class="filter-bar"><div class="search-box">⌕ <input id="contentSearch" placeholder="Search handle or caption"></div><div class="filter-chips"><button class="active" data-filter="all">All</button><button data-filter="instagram">Instagram</button><button data-filter="tiktok">TikTok</button><button data-filter="relevant">Relevant</button></div></div>
         <div class="content-stats"><span><strong id="statScraped">...</strong> scraped</span><span><strong id="statRelevant">...</strong> relevant</span><span><strong id="statDiscarded">...</strong> discarded</span><span><strong id="statPending">...</strong> pending</span></div>
         <div class="content-grid" id="contentGrid"></div>

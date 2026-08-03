@@ -57,6 +57,32 @@ document.querySelectorAll('.filter-chips button').forEach(btn=>btn.addEventListe
 function renderCreatorRows(){document.getElementById('creatorRows').innerHTML=creators.map(c=>`<div class="creator-row"><div class="creator-ident"><div class="creator-avatar" style="${avatarStyle(c.photo)}"></div><div><strong>${c.name}</strong><span>${c.handle} · Instagram</span></div></div><span><b>${c.followers}</b><small>latest snapshot</small></span><span><b>${c.content}</b><small>qualified pieces</small></span><span><b class="er-pill">${c.er}</b><small>audience ER</small></span><span><b>${c.engagements||'N/A'}</b><small>visible engagements</small></span></div>`).join('')}
 renderCreatorRows();
 
+let activeDeckCreator=0;
+function deckMediaCard(item,index){
+  const asset=item.assetKind==='video'&&item.assetUrl
+    ?`<video src="${item.assetUrl}" muted playsinline preload="metadata" controls aria-label="Video by ${item.user}"></video>`
+    :`<div class="deck-image" style="background-image:${item.bg}"></div>`;
+  return `<article class="deck-media-card"><div class="deck-media-frame">${asset}<div class="deck-media-top"><span>${String(index+1).padStart(2,'0')}</span><b>${item.type}</b></div></div><div class="deck-media-copy"><span>${item.date||'CAPTURED'}</span><p>${item.caption||'Captured campaign content'}</p><div><b>${item.views}</b><small>views</small><b>${item.likes}</b><small>likes</small></div></div></article>`
+}
+function renderCreatorDeck(){
+  const selector=document.getElementById('deckSelector');
+  const deck=document.getElementById('creatorDeck');
+  if(!selector||!deck)return;
+  if(!creators.length){selector.innerHTML='';deck.innerHTML='<p>No qualified creator data is available.</p>';return}
+  activeDeckCreator=Math.max(0,Math.min(activeDeckCreator,creators.length-1));
+  selector.innerHTML=creators.map((creator,index)=>`<button class="deck-selector-item ${index===activeDeckCreator?'active':''}" data-deck-index="${index}"><span class="deck-selector-avatar" style="${avatarStyle(creator.photo)}"></span><span><b>${creator.name}</b><small>${creator.handle}</small></span></button>`).join('');
+  const creator=creators[activeDeckCreator];
+  const creatorMedia=media.filter(item=>item.user.toLowerCase()===creator.handle.toLowerCase());
+  const videos=creatorMedia.filter(item=>item.assetKind==='video').length;
+  const images=creatorMedia.filter(item=>item.assetKind==='image').length;
+  deck.innerHTML=`<div class="deck-profile-panel"><div class="deck-slide-label">CREATOR SNAPSHOT <b>${String(activeDeckCreator+1).padStart(2,'0')}</b></div><div class="deck-profile-photo" style="${avatarStyle(creator.photo)}"><span>INSTAGRAM</span></div><div class="deck-profile-copy"><span>FEATURED CREATOR</span><h2>${creator.name}</h2><a href="https://instagram.com/${creator.handle.replace('@','')}" target="_blank" rel="noreferrer">${creator.handle} ↗</a><p>Instagram creator with ${creator.followers} followers. This profile contributed ${creatorMedia.length} approved campaign piece${creatorMedia.length===1?'':'s'}.</p></div><div class="deck-profile-stats"><div><span>FOLLOWERS</span><strong>${creator.followers}</strong><small>latest snapshot</small></div><div><span>QUALIFIED CONTENT</span><strong>${creator.content}</strong><small>${videos} video · ${images} image</small></div><div><span>ENGAGEMENT RATE</span><strong>${creator.er}</strong><small>${creator.er==='N/A'?'not publicly available':'audience based'}</small></div><div><span>VISIBLE ENGAGEMENTS</span><strong>${creator.engagements||'N/A'}</strong><small>approved media only</small></div></div><div class="deck-benchmark"><span>VALUE CONTEXT</span><strong>${creator.emv||'EMV pending'}</strong><p>Draft model uses qualified impressions × format CPM. Stories without public reach remain documented but unvalued.</p></div></div><div class="deck-content-panel"><div class="deck-content-head"><div><span>CONTENT GENERATED</span><h3>${creatorMedia.length} approved piece${creatorMedia.length===1?'':'s'}</h3></div><div><b>${videos}</b> video <i></i> <b>${images}</b> image</div></div><div class="deck-media-rail">${creatorMedia.length?creatorMedia.map(deckMediaCard).join(''):'<div class="deck-empty">No approved media for this creator yet.</div>'}</div></div>`;
+  document.getElementById('deckCounter').textContent=`${String(activeDeckCreator+1).padStart(2,'0')} / ${String(creators.length).padStart(2,'0')}`;
+  selector.querySelectorAll('[data-deck-index]').forEach(button=>button.addEventListener('click',()=>{activeDeckCreator=Number(button.dataset.deckIndex);renderCreatorDeck()}));
+}
+document.getElementById('deckPrev').addEventListener('click',()=>{activeDeckCreator=(activeDeckCreator-1+creators.length)%creators.length;renderCreatorDeck()});
+document.getElementById('deckNext').addEventListener('click',()=>{activeDeckCreator=(activeDeckCreator+1)%creators.length;renderCreatorDeck()});
+renderCreatorDeck();
+
 const savedReviews=JSON.parse(localStorage.getItem('hottestBrunchReviews')||'{}');
 function reviewItem(item,index){const decision=savedReviews[item.id]||item.decision;return `<article class="review-item ${decision&&decision!=='pending'?'reviewed':''}" data-id="${item.id}"><div class="review-thumb" style="background-image:${item.bg}">${mediaElement(item)}</div><div class="review-info"><div class="review-meta"><strong>${item.user}</strong><span>${item.type}</span><span class="confidence">${decision||'pending'}</span></div><h3>${index%2?'Possible event reference detected':'Campaign visual or venue signal detected'}</h3><p>${item.caption||'Captured campaign content'}</p></div><div class="review-actions"><button class="approve ${decision==='relevant'?'selected':''}" title="Relevant" data-decision="relevant">✓</button><button class="maybe ${decision==='maybe'?'selected':''}" title="Maybe" data-decision="maybe">?</button><button class="discard ${decision==='discarded'?'selected':''}" title="Discard" data-decision="discarded">×</button></div></article>`}
 let reviewItems=media.map((m,i)=>({...m,status:'pending',id:`review-${i+1}`}));
@@ -95,12 +121,12 @@ async function loadBackend(){
     const endpoint=isAdmin?'/Hottest_Brunch/admin/api/data':'/api/report/hottest-brunch';
     const response=await fetch(endpoint,{headers:{Accept:'application/json'}});if(!response.ok)throw new Error('Live dataset unavailable');
     const payload=await response.json();const summary=payload.summary||{};const rawContent=payload.content||[];
-    creators=(payload.creators||[]).map(c=>({name:c.displayName||c.handle,handle:'@'+c.handle,followers:compactNumber(c.followers),content:Number(c.content||0),er:c.engagementRate==null?'N/A':Number(c.engagementRate).toFixed(2)+'%',engagements:compactNumber(c.engagements),photo:mediaUrl(c.profileStorageKey)}));
+    creators=(payload.creators||[]).map(c=>({name:c.displayName||c.handle,handle:'@'+c.handle,followers:c.followers==null?'N/A':compactNumber(c.followers),followerCount:Number(c.followers||0),content:Number(c.content||0),er:c.engagementRate==null?'N/A':Number(c.engagementRate).toFixed(2)+'%',engagements:c.engagements==null?'N/A':compactNumber(c.engagements),photo:mediaUrl(c.profileStorageKey),bio:c.biography||'',category:c.category||'',emv:'EMV pending'})).sort((a,b)=>b.followerCount-a.followerCount);
     media=rawContent.map(mapBackendContent);reviewItems=media;
     document.getElementById('dataStatus').textContent='LIVE DATA';document.getElementById('kpiReach').textContent=compactNumber(summary.potentialAudience);document.getElementById('kpiViews').textContent=compactNumber(summary.views);document.getElementById('kpiEngagements').textContent=compactNumber(summary.engagements);document.getElementById('kpiEr').textContent=summary.views?((Number(summary.engagements)/Number(summary.views))*100).toFixed(2)+'%':'N/A';document.getElementById('kpiEmv').textContent='$'+compactNumber(calculateEmv(rawContent,payload.benchmarks||[]));
     document.getElementById('totalPieces').textContent=summary.totalScraped||0;document.getElementById('storyCount').textContent=summary.typeCounts?.story||0;document.getElementById('postCount').textContent=(summary.typeCounts?.post||0)+(summary.typeCounts?.reel||0);document.getElementById('tiktokCount').textContent=summary.typeCounts?.tiktok||0;document.getElementById('qualifiedCount').textContent=summary.qualified||0;document.getElementById('qualifiedBar').style.width=((summary.qualified||0)/Math.max(1,summary.totalScraped||1)*100)+'%';document.getElementById('pendingLabel').textContent=(summary.pending||0)+' pending review';
     document.getElementById('statScraped').textContent=summary.totalScraped||0;document.getElementById('statRelevant').textContent=summary.qualified||0;document.getElementById('statDiscarded').textContent=summary.discarded||0;document.getElementById('statPending').textContent=summary.pending||0;
-    renderCreatorCards();renderCreatorRows();renderSocial();renderContent();renderReviews();
+    activeDeckCreator=0;renderCreatorCards();renderCreatorRows();renderSocial();renderContent();renderReviews();renderCreatorDeck();
     if(isAdmin)showView('review');
   }catch(error){document.getElementById('dataStatus').textContent='OFFLINE PREVIEW';showToast(error.message)}
 }
