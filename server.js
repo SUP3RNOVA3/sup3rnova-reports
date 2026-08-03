@@ -42,7 +42,7 @@ function serveFile(res, filePath) {
       'Content-Length': stat.size,
       'Cache-Control': path.extname(filePath)==='.html' ? 'no-cache' : 'public, max-age=3600',
       'X-Frame-Options':'SAMEORIGIN','X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin',
-      'Content-Security-Policy': "default-src 'self'; img-src 'self' data: blob: https://images.unsplash.com; media-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'",
+      'Content-Security-Policy': "default-src 'self'; img-src 'self' data: blob: https://images.unsplash.com; media-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com",
     });
     fs.createReadStream(filePath).pipe(res);
   });
