@@ -2,22 +2,23 @@
 
 Reusable client-reporting shell for `reports.sup3rnova.com`.
 
-## Current prototype
+## Current report
 
 - Report: The Hottest Brunch x Absolut Tabasco
 - Route target: `/Hottest_Brunch/`
 - Data mode: live Supabase Lab dataset with mock benchmark assumptions
-- Working modules: overview, content library, creator profiles, benchmark assumptions, and review queue
-- Review decisions persist in browser `localStorage` for prototype testing
+- Working modules: overview, live creator deck, content library, creator profiles, benchmark assumptions, and protected review queue
+- Creator deck pairs each live profile snapshot with its approved image and video content
+- Review decisions are persisted to Supabase through the protected admin API
 
 ## Run locally
 
 ```bash
-cd projects/sup3rnova-reports
-python3 -m http.server 4173
+npm install
+npm start
 ```
 
-Open `http://127.0.0.1:4173/Hottest_Brunch/`.
+Open `http://127.0.0.1:3000/Hottest_Brunch/`. Live data and media require the production environment variables.
 
 ## Production
 
