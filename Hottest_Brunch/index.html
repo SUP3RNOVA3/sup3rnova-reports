@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>The Hottest Brunch | Absolut Content Report</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230b1020%22/><text x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-size=%2237%22 font-family=%22Arial%22 font-weight=%22700%22 fill=%22white%22>A</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-lockup">
+        <div class="brand-mark">A</div>
+        <div><strong>ABSOLUT</strong><span>REPORTING</span></div>
+      </div>
+
+      <nav class="main-nav" aria-label="Report sections">
+        <button class="nav-item active" data-view="overview"><span>⌁</span> Overview</button>
+        <button class="nav-item" data-view="content"><span>▦</span> Content library</button>
+        <button class="nav-item" data-view="creators"><span>◎</span> Creators</button>
+        <button class="nav-item" data-view="benchmarks"><span>⌗</span> Benchmarks & EMV</button>
+        <button class="nav-item" data-view="review"><span>✓</span> Review queue <b id="navPending">8</b></button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="sync-card"><span class="sync-dot"></span><div><strong>TikHub sync</strong><small>Prototype data</small></div></div>
+        <p>Prepared by <strong>SUP3RNOVA</strong></p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumbs">REPORTS <span>/</span> ABSOLUT <span>/</span> HOTTEST BRUNCH</div>
+        <div class="top-actions">
+          <span class="prototype-pill" id="dataStatus">CONNECTING</span>
+          <button class="icon-btn" aria-label="Export report">⇩</button>
+          <div class="user-avatar">JP</div>
+        </div>
+      </header>
+
+      <section class="view active" id="view-overview">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span></span> CONTENT INTELLIGENCE REPORT</div>
+            <h1>The Hottest<br><em>Brunch.</em></h1>
+            <p>Absolut Tabasco · Puerto Rico · August 2026</p>
+            <div class="hero-tags"><span>Instagram</span><span>TikTok</span><span>Earned content</span></div>
+          </div>
+          <div class="hero-orbit" aria-hidden="true">
+            <div class="bottle-word">ABSOLUT</div>
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="pepper">HOT<br>TAKE</div>
+          </div>
+          <div class="hero-meta"><span>REPORTING WINDOW</span><strong>JUL 31 - AUG 07</strong><small>Last mock sync: 2 min ago</small></div>
+        </div>
+
+        <div class="section-heading"><div><span>CAMPAIGN PULSE</span><h2>Performance at a glance</h2></div><button class="text-btn" data-jump="benchmarks">View methodology →</button></div>
+        <div class="kpi-grid">
+          <article class="kpi-card featured"><div class="kpi-icon">◉</div><span>Potential audience</span><strong id="kpiReach">Loading</strong><div class="trend"><small>latest follower snapshots</small></div></article>
+          <article class="kpi-card"><div class="kpi-icon">▷</div><span>Qualified views</span><strong id="kpiViews">Loading</strong><div class="trend"><small>approved content only</small></div></article>
+          <article class="kpi-card"><div class="kpi-icon">♡</div><span>Visible engagements</span><strong id="kpiEngagements">Loading</strong><div class="trend"><b id="kpiEr">N/A</b> <small>view ER</small></div></article>
+          <article class="kpi-card red"><div class="kpi-icon">$</div><span>Estimated EMV</span><strong id="kpiEmv">Draft</strong><div class="trend"><small>working assumptions</small></div></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel performance-panel">
+            <div class="panel-head"><div><span>DAILY PERFORMANCE</span><h3>Earned content velocity</h3></div><div class="legend"><i class="blue"></i> Views <i class="red-dot"></i> Engagements</div></div>
+            <div class="chart-wrap">
+              <div class="chart-y"><span>800K</span><span>600K</span><span>400K</span><span>200K</span><span>0</span></div>
+              <svg class="area-chart" viewBox="0 0 700 260" preserveAspectRatio="none" aria-label="Mock performance chart">
+                <defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2457ff" stop-opacity=".28"/><stop offset="1" stop-color="#2457ff" stop-opacity="0"/></linearGradient></defs>
+                <g class="grid-lines"><line x1="0" y1="20" x2="700" y2="20"/><line x1="0" y1="75" x2="700" y2="75"/><line x1="0" y1="130" x2="700" y2="130"/><line x1="0" y1="185" x2="700" y2="185"/><line x1="0" y1="240" x2="700" y2="240"/></g>
+                <path class="area" d="M0 225 C65 220 90 214 125 205 S190 180 230 178 S295 60 355 84 S440 125 478 119 S550 70 590 92 S650 72 700 57 L700 240 L0 240 Z"/>
+                <path class="line blue-line" d="M0 225 C65 220 90 214 125 205 S190 180 230 178 S295 60 355 84 S440 125 478 119 S550 70 590 92 S650 72 700 57"/>
+                <path class="line red-line" d="M0 232 C75 230 110 226 150 222 S230 190 275 205 S370 175 420 190 S520 158 580 170 S650 155 700 149"/>
+                <circle cx="700" cy="57" r="5" class="chart-point"/>
+              </svg>
+              <div class="chart-x"><span>JUL 31</span><span>AUG 01</span><span>AUG 02</span><span>AUG 03</span><span>AUG 04</span><span>AUG 05</span><span>AUG 06</span><span>AUG 07</span></div>
+            </div>
+          </article>
+
+          <article class="panel channel-panel">
+            <div class="panel-head"><div><span>CONTENT MIX</span><h3>By platform</h3></div></div>
+            <div class="donut-wrap">
+              <div class="donut"><div><strong id="totalPieces">...</strong><span>pieces found</span></div></div>
+              <div class="channel-list">
+                <div><i class="ig"></i><span>Instagram Stories</span><b id="storyCount">...</b><small>scraped</small></div>
+                <div><i class="posts"></i><span>IG Posts & Reels</span><b id="postCount">...</b><small>scraped</small></div>
+                <div><i class="tt"></i><span>TikTok</span><b id="tiktokCount">...</b><small>scraped</small></div>
+              </div>
+            </div>
+            <div class="quality-row"><span>Qualified after review</span><strong id="qualifiedCount">...</strong><div><i id="qualifiedBar" style="width:0"></i></div><small id="pendingLabel">Loading review status</small></div>
+          </article>
+        </div>
+
+        <div class="section-heading compact"><div><span>CREATOR IMPACT</span><h2>Profiles driving the conversation</h2></div><button class="text-btn" data-jump="creators">All creators →</button></div>
+        <div class="creator-strip" id="creatorStrip"></div>
+
+        <div class="section-heading compact"><div><span>SOCIAL VIEW</span><h2>Content, in context</h2></div><button class="text-btn" data-jump="content">Open library →</button></div>
+        <div class="social-showcase" id="socialShowcase"></div>
+      </section>
+
+      <section class="view" id="view-content">
+        <div class="page-title"><div><span>CONTENT LIBRARY</span><h1>Every piece, one view.</h1><p>Browse normalized media across Instagram and TikTok. Metrics shown are prototype fixtures.</p></div><button class="primary-btn">Export CSV</button></div>
+        <div class="filter-bar"><div class="search-box">⌕ <input id="contentSearch" placeholder="Search handle or caption"></div><div class="filter-chips"><button class="active" data-filter="all">All</button><button data-filter="instagram">Instagram</button><button data-filter="tiktok">TikTok</button><button data-filter="relevant">Relevant</button></div></div>
+        <div class="content-stats"><span><strong id="statScraped">...</strong> scraped</span><span><strong id="statRelevant">...</strong> relevant</span><span><strong id="statDiscarded">...</strong> discarded</span><span><strong id="statPending">...</strong> pending</span></div>
+        <div class="content-grid" id="contentGrid"></div>
+      </section>
+
+      <section class="view" id="view-creators">
+        <div class="page-title"><div><span>CREATOR PROFILES</span><h1>Who moved the room.</h1><p>Audience size, content contribution, engagement quality and estimated value in one profile.</p></div><button class="primary-btn">Export creators</button></div>
+        <div class="creator-table panel"><div class="creator-table-head"><span>CREATOR</span><span>FOLLOWERS</span><span>CONTENT</span><span>ENGAGEMENT RATE</span><span>EST. EMV</span></div><div id="creatorRows"></div></div>
+      </section>
+
+      <section class="view" id="view-benchmarks">
+        <div class="page-title"><div><span>METHODOLOGY</span><h1>Transparent by design.</h1><p>Every estimate exposes its formula, inputs and effective benchmark version.</p></div><span class="version-pill">MODEL v0.1 · MOCK</span></div>
+        <div class="method-hero"><div><span>PROPOSED EMV MODEL</span><h2>Qualified impressions <b>÷ 1,000</b> × Benchmark CPM × Format multiplier</h2><p>Presentation-only assumptions. Final values require SUP3RNOVA commercial approval before client use.</p></div><div class="formula-value"><small>ILLUSTRATIVE OUTPUT</small><strong>$86,400</strong><span>USD estimated media value</span></div></div>
+        <div class="benchmark-grid">
+          <article class="panel"><div class="panel-head"><div><span>BENCHMARK ASSUMPTIONS</span><h3>Base CPM by format</h3></div></div><div class="benchmark-table"><div><span>Instagram Story</span><b>$18.00</b><small>1.0×</small></div><div><span>Instagram Feed</span><b>$24.00</b><small>1.2×</small></div><div><span>Instagram Reel</span><b>$28.00</b><small>1.4×</small></div><div><span>TikTok video</span><b>$22.00</b><small>1.3×</small></div></div></article>
+          <article class="panel"><div class="panel-head"><div><span>ENGAGEMENT RATE</span><h3>Audience-based tiers</h3></div></div><div class="tier-list"><div><i class="excellent"></i><span>Excellent</span><b>≥ 6.0%</b></div><div><i class="strong"></i><span>Strong</span><b>3.5–5.9%</b></div><div><i class="average"></i><span>Average</span><b>1.8–3.4%</b></div><div><i class="low"></i><span>Below benchmark</span><b>&lt; 1.8%</b></div></div></article>
+        </div>
+        <article class="panel caveat-panel"><span>DATA NOTE</span><p>Public social APIs do not expose every private metric. Missing values remain null and are visibly labeled as unavailable. Stories without public engagement data contribute to documented coverage, but never receive fabricated zero engagement.</p></article>
+      </section>
+
+      <section class="view" id="view-review">
+        <div class="page-title"><div><span>ADMIN WORKSPACE</span><h1>Review what counts.</h1><p>Approve, hold or discard scraped content before it enters client-facing totals.</p></div><div class="review-progress"><strong id="reviewedCount">0</strong><span>reviewed this session</span></div></div>
+        <div class="review-toolbar"><div><button class="active">Pending <b id="pendingCount">8</b></button><button>Maybe <b>2</b></button><button>Discarded <b>43</b></button></div><span>Decisions are reversible and audited in production.</span></div>
+        <div class="review-list" id="reviewList"></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

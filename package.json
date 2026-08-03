@@ -1,0 +1,16 @@
+{
+  "name": "sup3rnova-reports",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check Hottest_Brunch/app.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.864.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
