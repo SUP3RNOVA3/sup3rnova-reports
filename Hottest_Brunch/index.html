@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=review-stability-2">
-  <link rel="stylesheet" href="./review.css?v=review-stability-2">
+  <link rel="stylesheet" href="./styles.css?v=relevant-report-1">
+  <link rel="stylesheet" href="./review.css?v=relevant-report-1">
 </head>
 <body>
   <div class="app-shell">
@@ -79,14 +79,14 @@
           <article class="panel channel-panel">
             <div class="panel-head"><div><span>CONTENT MIX</span><h3>By platform</h3></div></div>
             <div class="donut-wrap">
-              <div class="donut"><div><strong id="totalPieces">...</strong><span>pieces found</span></div></div>
+              <div class="donut"><div><strong id="totalPieces">...</strong><span id="totalPiecesLabel">approved pieces</span></div></div>
               <div class="channel-list">
-                <div><i class="ig"></i><span>Instagram Stories</span><b id="storyCount">...</b><small>scraped</small></div>
-                <div><i class="posts"></i><span>IG Posts & Reels</span><b id="postCount">...</b><small>scraped</small></div>
-                <div><i class="tt"></i><span>TikTok</span><b id="tiktokCount">...</b><small>scraped</small></div>
+                <div><i class="ig"></i><span>Instagram Stories</span><b id="storyCount">...</b><small id="storyCountLabel">approved</small></div>
+                <div><i class="posts"></i><span>IG Posts & Reels</span><b id="postCount">...</b><small id="postCountLabel">approved</small></div>
+                <div><i class="tt"></i><span>TikTok</span><b id="tiktokCount">...</b><small id="tiktokCountLabel">approved</small></div>
               </div>
             </div>
-            <div class="quality-row"><span>Qualified after review</span><strong id="qualifiedCount">...</strong><div><i id="qualifiedBar" style="width:0"></i></div><small id="pendingLabel">Loading review status</small></div>
+            <div class="quality-row"><span id="qualityLabel">Included in client report</span><strong id="qualifiedCount">...</strong><div><i id="qualifiedBar" style="width:0"></i></div><small id="pendingLabel">Relevant content only</small></div>
           </article>
         </div>
 
@@ -110,7 +110,7 @@
       <section class="view" id="view-content">
         <div class="page-title"><div><span>CONTENT LIBRARY</span><h1>Every piece, one view.</h1><p>Browse approved, normalized media across Instagram and TikTok. Missing public metrics remain unavailable.</p></div><button class="primary-btn">Export CSV</button></div>
         <div class="filter-bar"><div class="search-box">⌕ <input id="contentSearch" placeholder="Search handle or caption"></div><div class="filter-chips"><button class="active" data-filter="all">All</button><button data-filter="instagram">Instagram</button><button data-filter="tiktok">TikTok</button><button data-filter="relevant">Relevant</button></div></div>
-        <div class="content-stats"><span><strong id="statScraped">...</strong> scraped</span><span><strong id="statRelevant">...</strong> relevant</span><span><strong id="statDiscarded">...</strong> discarded</span><span><strong id="statPending">...</strong> pending</span></div>
+        <div class="content-stats" id="contentStats"><span><strong id="statScraped">...</strong> scraped</span><span><strong id="statRelevant">...</strong> relevant</span><span><strong id="statDiscarded">...</strong> discarded</span><span><strong id="statPending">...</strong> pending</span></div>
         <div class="content-grid" id="contentGrid"></div>
       </section>
 
@@ -149,6 +149,6 @@
   </div>
   <div class="media-modal" id="mediaModal" aria-hidden="true"><button class="media-modal-close" aria-label="Close media viewer">×</button><button class="media-modal-nav prev" data-modal-nav="-1" aria-label="Previous asset">←</button><div class="media-modal-content" id="mediaModalContent"></div><button class="media-modal-nav next" data-modal-nav="1" aria-label="Next asset">→</button></div>
   <div class="toast" id="toast"></div>
-  <script src="./app.js?v=review-stability-2"></script>
+  <script src="./app.js?v=relevant-report-1"></script>
 </body>
 </html>

@@ -236,23 +236,21 @@ creator_stats as (
   group by cr.id, lc.follower_count
 ),
 decision_counts as (
-  select coalesce(r.decision,'pending') decision, count(*) total
-  from report_content c join project p on p.id=c.project_id
-  left join report_reviews r on r.content_id=c.id group by 1
+  select decision, count(*) total
+  from content_set group by decision
 ),
 type_counts as (
-  select c.source_type, count(*) total from report_content c
-  join project p on p.id=c.project_id group by c.source_type
+  select source_type, count(*) total from content_set group by source_type
 ),
 summary as (
   select jsonb_build_object(
-    'totalScraped', (select count(*) from report_content c join project p on p.id=c.project_id),
+    'totalScraped', (select count(*) from content_set),
     'qualified', coalesce((select total from decision_counts where decision='relevant'),0),
     'pending', coalesce((select total from decision_counts where decision='pending'),0),
     'maybe', coalesce((select total from decision_counts where decision='maybe'),0),
     'discarded', coalesce((select total from decision_counts where decision='discarded'),0),
-    'creatorCount', (select count(*) from report_creators cr join project p on p.id=cr.project_id),
-    'potentialAudience', coalesce((select sum(follower_count) from creator_stats),0),
+    'creatorCount', (select count(*) from creator_stats where p_include_all or qualified_content > 0),
+    'potentialAudience', coalesce((select sum(follower_count) from creator_stats where p_include_all or qualified_content > 0),0),
     'views', coalesce((select sum(views) from content_set where decision='relevant'),0),
     'engagements', coalesce((select sum(coalesce(like_count,0)+coalesce(comment_count,0)+coalesce(share_count,0)+coalesce(save_count,0)) from content_set where decision='relevant'),0),
     'typeCounts', coalesce((select jsonb_object_agg(source_type,total) from type_counts),'{}'::jsonb)
