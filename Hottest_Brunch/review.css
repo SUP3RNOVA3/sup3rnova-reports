@@ -1,3 +1,110 @@
+.review-workspace {
+  grid-template-columns: minmax(410px, 42%) minmax(0, 1fr);
+}
+
+.review-item {
+  grid-template-columns: 108px minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 12px;
+}
+
+.review-thumb {
+  width: 108px;
+  height: 122px;
+}
+
+.review-info .review-meta strong {
+  font-size: 11px;
+}
+
+.review-info > b {
+  font-size: 9px;
+}
+
+.review-info > small {
+  font-size: 9px;
+  -webkit-line-clamp: 3;
+}
+
+.review-video-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-style: normal;
+  font-size: 22px;
+  text-shadow: 0 2px 9px #000;
+  pointer-events: none;
+}
+
+.review-play-button {
+  position: absolute;
+  z-index: 4;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 50%;
+  background: rgba(5, 8, 16, .72);
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.review-play-button span {
+  font: 800 7px Manrope;
+  letter-spacing: .08em;
+}
+
+.review-play-button.playing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.review-play-button.loading {
+  opacity: .45;
+}
+
+.review-media-status {
+  display: none;
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  padding: 8px 11px;
+  border-radius: 9px;
+  background: rgba(5, 8, 16, .78);
+  color: #fff;
+  font-size: 8px;
+  text-align: center;
+}
+
+.review-media-status.show {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.review-media-status.error {
+  background: rgba(158, 34, 27, .94);
+}
+
+.review-media-status button {
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: 6px;
+  background: #fff;
+  color: #8e1c16;
+  padding: 4px 7px;
+  font: 800 7px Manrope;
+  cursor: pointer;
+}
+
 .review-queue-pager {
   position: sticky;
   bottom: 0;
@@ -30,6 +137,10 @@
 }
 
 @media (max-width: 760px) {
+  .review-workspace {
+    display: block;
+  }
+
   .review-list {
     display: block;
     max-height: 310px;
@@ -42,6 +153,16 @@
     display: grid;
     grid-template-columns: 62px minmax(0, 1fr);
     border-right: 0;
+  }
+
+  .review-thumb {
+    width: 62px;
+    height: 72px;
+  }
+
+  .review-play-button {
+    width: 72px;
+    height: 72px;
   }
 
   .review-queue-pager {
