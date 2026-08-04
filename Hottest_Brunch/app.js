@@ -1,21 +1,5 @@
-let creators = [
-  {name:'Valeria Cruz',handle:'@valeriacruz',initials:'VC',followers:'186K',content:14,er:'6.8%',emv:'$18.4K',photo:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=180&q=80'},
-  {name:'Marco Rivera',handle:'@marcoriv',initials:'MR',followers:'94.2K',content:9,er:'5.4%',emv:'$12.1K',photo:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=180&q=80'},
-  {name:'Nina Santiago',handle:'@ninawanders',initials:'NS',followers:'72.8K',content:11,er:'7.1%',emv:'$10.8K',photo:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=180&q=80'},
-  {name:'Diego Torres',handle:'@diegocreates',initials:'DT',followers:'51.6K',content:7,er:'4.9%',emv:'$7.6K',photo:'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=180&q=80'},
-  {name:'Ana Sofía',handle:'@anasofia.pr',initials:'AS',followers:'43.1K',content:6,er:'6.2%',emv:'$6.9K',photo:'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=180&q=80'}
-];
-
-let media = [
-  {id:'p-01',user:'@valeriacruz',platform:'instagram',type:'REEL',status:'relevant',caption:'Brunch got a little hotter 🌶️🍸 #AbsolutTabasco',likes:'24.8K',comments:'486',views:'418K',photo:creators[0].photo,bg:'linear-gradient(145deg,rgba(4,10,28,.15),rgba(244,47,37,.35)),url(https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-02',user:'@ninawanders',platform:'instagram',type:'CAROUSEL',status:'relevant',caption:'A spicy afternoon with the best people in San Juan.',likes:'18.2K',comments:'312',views:'204K',photo:creators[2].photo,bg:'linear-gradient(145deg,rgba(35,76,255,.08),rgba(239,59,45,.35)),url(https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-03',user:'@marcoriv',platform:'tiktok',type:'TIKTOK',status:'relevant',caption:'POV: you found the hottest brunch in PR.',likes:'31.5K',comments:'744',views:'612K',photo:creators[1].photo,bg:'linear-gradient(145deg,rgba(10,13,24,.12),rgba(35,76,255,.4)),url(https://images.unsplash.com/photo-1529604278261-8bfcdb00a7b9?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-04',user:'@anasofia.pr',platform:'instagram',type:'STORY',status:'pending',caption:'The cocktail pairing we did not know we needed.',likes:'N/A',comments:'N/A',views:'32.1K',photo:creators[4].photo,bg:'linear-gradient(145deg,rgba(239,59,45,.12),rgba(9,13,25,.5)),url(https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-05',user:'@diegocreates',platform:'instagram',type:'REEL',status:'relevant',caption:'A visual recap from VINE. Heat, color and community.',likes:'11.7K',comments:'208',views:'176K',photo:creators[3].photo,bg:'linear-gradient(145deg,rgba(35,76,255,.15),rgba(239,59,45,.3)),url(https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-06',user:'@ninawanders',platform:'tiktok',type:'TIKTOK',status:'pending',caption:'Fit check before brunch. Wait for the drink reveal.',likes:'8.4K',comments:'193',views:'129K',photo:creators[2].photo,bg:'linear-gradient(145deg,rgba(9,13,25,.15),rgba(35,76,255,.4)),url(https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-07',user:'@valeriacruz',platform:'instagram',type:'STORY',status:'pending',caption:'Live from The Hottest Brunch.',likes:'N/A',comments:'N/A',views:'41.8K',photo:creators[0].photo,bg:'linear-gradient(145deg,rgba(239,59,45,.14),rgba(15,20,40,.42)),url(https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=700&q=85)'},
-  {id:'p-08',user:'@marcoriv',platform:'instagram',type:'POST',status:'pending',caption:'Weekend color study from Old San Juan.',likes:'5.2K',comments:'92',views:'N/A',photo:creators[1].photo,bg:'linear-gradient(145deg,rgba(35,76,255,.1),rgba(239,59,45,.2)),url(https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?auto=format&fit=crop&w=700&q=85)'}
-];
+let creators = [];
+let media = [];
 
 const isAdmin = window.location.pathname.toLowerCase().includes('/admin');
 const navItems = document.querySelectorAll('.nav-item');
@@ -34,10 +18,10 @@ document.querySelectorAll('[data-jump]').forEach(item=>item.addEventListener('cl
 document.querySelector('.menu-toggle').addEventListener('click',()=>document.querySelector('.sidebar').classList.toggle('open'));
 
 function avatarStyle(photo){return `background-image:url('${photo}')`}
-function renderCreatorCards(){document.getElementById('creatorStrip').innerHTML=creators.slice(0,4).map(c=>`<article class="creator-card"><div class="creator-avatar" style="${avatarStyle(c.photo)}"></div><div><h4>${c.name}</h4><p>${c.handle}</p><span class="er-pill">${c.er} ER</span></div><div class="creator-metrics"><div><span>FOLLOWERS</span><b>${c.followers}</b></div><div><span>CONTENT</span><b>${c.content}</b></div><div><span>VISIBLE ENG.</span><b>${c.engagements||'N/A'}</b></div></div></article>`).join('')}
+function renderCreatorCards(){document.getElementById('creatorStrip').innerHTML=creators.slice(0,4).map(c=>`<article class="creator-card"><div class="creator-avatar" style="${avatarStyle(c.photo)}"></div><div><h4>${c.name}</h4><p>${c.handle}</p><span class="er-pill">${c.er==='N/A'?'N/A':c.er+' ER'}</span></div><div class="creator-metrics"><div><span>FOLLOWERS</span><b>${c.followers}</b></div><div><span>CONTENT</span><b>${c.content}</b></div><div><span>VISIBLE ENG.</span><b>${c.engagements||'N/A'}</b></div></div></article>`).join('')}
 renderCreatorCards();
 
-function mediaElement(item){return item.assetKind==='video'&&item.assetUrl?`<video src="${item.assetUrl}" muted playsinline preload="none"></video>`:''}
+function mediaElement(item){return item.assetKind==='video'&&item.assetUrl?`<video src="${item.assetUrl}" muted playsinline preload="metadata" controls></video>`:''}
 function socialCard(item){return `<article class="social-card"><div class="social-head"><div class="mini-avatar" style="${avatarStyle(item.photo)}"></div><div><strong>${item.user}</strong><small>San Juan, Puerto Rico</small></div><b>•••</b></div><div class="social-media" style="background-image:${item.bg}">${mediaElement(item)}<span class="media-label">${item.type}</span>${item.type==='REEL'||item.type==='TIKTOK'||item.assetKind==='video'?'<span class="reel-play">▶</span>':''}</div><div class="social-actions"><div class="social-icons"><span>♡</span><span>◯</span><span>⌁</span><span>▢</span></div><p><strong>${item.likes} likes</strong><br>${item.caption||'Captured campaign content'}</p><small>${item.views} views · Live dataset</small></div></article>`}
 function renderSocial(){document.getElementById('socialShowcase').innerHTML=media.slice(0,3).map(socialCard).join('')}
 renderSocial();
@@ -122,6 +106,30 @@ function mapBackendContent(item){
   return {id:item.id,user:'@'+(item.handle||'unknown'),platform:item.platform,type:String(item.sourceType||'post').toUpperCase(),status:item.decision||'pending',decision:item.decision||'pending',caption:item.caption||'',likes:item.likes==null?'N/A':compactNumber(item.likes),comments:item.comments==null?'N/A':compactNumber(item.comments),views:item.views==null?'N/A':compactNumber(item.views),photo:mediaUrl(item.profileStorageKey),assetUrl,assetKind:item.assetKind,bg:isImage&&assetUrl?`linear-gradient(145deg,rgba(9,13,25,.08),rgba(35,76,255,.12)),url("${assetUrl}")`:'linear-gradient(145deg,#17214a,#ef3b2d)',date:item.publishedAt?new Date(item.publishedAt).toLocaleDateString('en-US',{month:'short',day:'2-digit'}).toUpperCase():'N/A'}
 }
 function calculateEmv(items,benchmarks){return items.reduce((total,item)=>{if(item.decision!=='relevant'||!item.views)return total;const format=item.platform==='tiktok'?'tiktok':item.sourceType;const benchmark=benchmarks.find(b=>b.platform===item.platform&&b.format===format);return total+(benchmark?Number(item.views)/1000*Number(benchmark.value)*Number(benchmark.multiplier):0)},0)}
+function puertoRicoDateKey(value){
+  if(!value)return null;
+  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Puerto_Rico',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(value));
+  const values=Object.fromEntries(parts.map(part=>[part.type,part.value]));
+  return `${values.year}-${values.month}-${values.day}`
+}
+function campaignDateKeys(project,items){
+  const observed=items.map(item=>puertoRicoDateKey(item.publishedAt)).filter(Boolean).sort();
+  const start=project?.campaign_start||observed[0];
+  const end=project?.campaign_end||observed.at(-1)||start;
+  if(!start)return [];
+  const result=[];let cursor=new Date(`${start}T12:00:00Z`);const stop=new Date(`${end}T12:00:00Z`);
+  while(cursor<=stop&&result.length<31){result.push(cursor.toISOString().slice(0,10));cursor.setUTCDate(cursor.getUTCDate()+1)}
+  return result
+}
+function renderVelocityChart(items,project){
+  const chart=document.getElementById('velocityChart');if(!chart)return;
+  const qualified=items.filter(item=>item.decision==='relevant');const dates=campaignDateKeys(project,qualified);
+  const counts=Object.fromEntries(dates.map(date=>[date,{instagram:0,tiktok:0}]));
+  qualified.forEach(item=>{const key=puertoRicoDateKey(item.publishedAt);if(counts[key])counts[key][item.platform==='tiktok'?'tiktok':'instagram']+=1});
+  const max=Math.max(1,...Object.values(counts).map(value=>value.instagram+value.tiktok));
+  if(!dates.length){chart.innerHTML='<div class="chart-loading">No approved publication dates available.</div>';return}
+  chart.innerHTML=`<div class="velocity-scale"><span>${max}</span><span>${Math.ceil(max/2)}</span><span>0</span></div><div class="velocity-grid">${dates.map(date=>{const value=counts[date];const total=value.instagram+value.tiktok;const label=new Date(`${date}T12:00:00Z`).toLocaleDateString('en-US',{month:'short',day:'2-digit'}).toUpperCase();return `<div class="velocity-day" title="${label}: ${total} approved"><strong>${total||''}</strong><div class="velocity-bars"><i class="instagram" style="height:${value.instagram/max*100}%"></i><i class="tiktok" style="height:${value.tiktok/max*100}%"></i></div><span>${label}</span></div>`}).join('')}</div>`
+}
 async function loadBackend(){
   try{
     const endpoint=isAdmin?'/Hottest_Brunch/admin/api/data':'/api/report/hottest-brunch';
@@ -129,10 +137,12 @@ async function loadBackend(){
     const payload=await response.json();const summary=payload.summary||{};const rawContent=payload.content||[];
     creators=(payload.creators||[]).map(c=>({name:c.displayName||c.handle,handle:'@'+c.handle,followers:c.followers==null?'N/A':compactNumber(c.followers),followerCount:Number(c.followers||0),content:Number(c.content||0),er:c.engagementRate==null?'N/A':Number(c.engagementRate).toFixed(2)+'%',engagements:c.engagements==null?'N/A':compactNumber(c.engagements),photo:mediaUrl(c.profileStorageKey),bio:c.biography||'',category:c.category||'',emv:'EMV pending'})).sort((a,b)=>b.followerCount-a.followerCount);
     media=rawContent.map(mapBackendContent);reviewItems=media;
-    document.getElementById('dataStatus').textContent='LIVE DATA';document.getElementById('kpiReach').textContent=compactNumber(summary.potentialAudience);document.getElementById('kpiViews').textContent=compactNumber(summary.views);document.getElementById('kpiEngagements').textContent=compactNumber(summary.engagements);document.getElementById('kpiEr').textContent=summary.views?((Number(summary.engagements)/Number(summary.views))*100).toFixed(2)+'%':'N/A';document.getElementById('kpiEmv').textContent='$'+compactNumber(calculateEmv(rawContent,payload.benchmarks||[]));
-    document.getElementById('totalPieces').textContent=summary.totalScraped||0;document.getElementById('storyCount').textContent=summary.typeCounts?.story||0;document.getElementById('postCount').textContent=(summary.typeCounts?.post||0)+(summary.typeCounts?.reel||0);document.getElementById('tiktokCount').textContent=summary.typeCounts?.tiktok||0;document.getElementById('qualifiedCount').textContent=summary.qualified||0;document.getElementById('qualifiedBar').style.width=((summary.qualified||0)/Math.max(1,summary.totalScraped||1)*100)+'%';document.getElementById('pendingLabel').textContent=(summary.pending||0)+' pending review';
+    const emv=calculateEmv(rawContent,payload.benchmarks||[]);
+    document.getElementById('dataStatus').textContent='LIVE DATA';document.getElementById('kpiReach').textContent=compactNumber(summary.potentialAudience);document.getElementById('kpiViews').textContent=compactNumber(summary.views);document.getElementById('kpiEngagements').textContent=compactNumber(summary.engagements);document.getElementById('kpiEr').textContent=summary.views?((Number(summary.engagements)/Number(summary.views))*100).toFixed(2)+'%':'N/A';document.getElementById('kpiEmv').textContent='$'+compactNumber(emv);document.getElementById('methodOutput').textContent='$'+compactNumber(emv);document.getElementById('modelVersion').textContent=`MODEL v${payload.model?.version||'0.1'} · ${String(payload.model?.status||'draft').toUpperCase()}`;
+    const storyTotal=Number(summary.typeCounts?.story||0);const postTotal=Number(summary.typeCounts?.post||0)+Number(summary.typeCounts?.reel||0);const tiktokTotal=Number(summary.typeCounts?.tiktok||0);const contentTotal=Math.max(1,storyTotal+postTotal+tiktokTotal);const storyEnd=storyTotal/contentTotal*100;const postEnd=(storyTotal+postTotal)/contentTotal*100;
+    document.getElementById('totalPieces').textContent=summary.totalScraped||0;document.getElementById('storyCount').textContent=storyTotal;document.getElementById('postCount').textContent=postTotal;document.getElementById('tiktokCount').textContent=tiktokTotal;document.querySelector('.donut').style.background=`conic-gradient(var(--blue) 0 ${storyEnd}%,var(--red) ${storyEnd}% ${postEnd}%,#111827 ${postEnd}% 100%)`;document.getElementById('qualifiedCount').textContent=summary.qualified||0;document.getElementById('qualifiedBar').style.width=((summary.qualified||0)/Math.max(1,summary.totalScraped||1)*100)+'%';document.getElementById('pendingLabel').textContent=(summary.pending||0)+' pending review';
     document.getElementById('statScraped').textContent=summary.totalScraped||0;document.getElementById('statRelevant').textContent=summary.qualified||0;document.getElementById('statDiscarded').textContent=summary.discarded||0;document.getElementById('statPending').textContent=summary.pending||0;
-    activeDeckCreator=0;renderCreatorCards();renderCreatorRows();renderSocial();renderContent();renderReviews();renderCreatorDeck();
+    activeDeckCreator=0;renderCreatorCards();renderCreatorRows();renderSocial();renderContent();renderReviews();renderCreatorDeck();renderVelocityChart(rawContent,payload.project||{});
     if(isAdmin)showView('review');
   }catch(error){document.getElementById('dataStatus').textContent='OFFLINE PREVIEW';showToast(error.message)}
 }
