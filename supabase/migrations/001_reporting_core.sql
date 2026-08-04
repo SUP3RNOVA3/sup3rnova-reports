@@ -199,9 +199,10 @@ latest_creator as (
 ),
 content_set as (
   select c.*, coalesce(r.decision, 'pending') as decision,
+    r.notes as review_notes,
     lm.like_count, lm.comment_count, lm.share_count, lm.save_count,
     coalesce(lm.view_count, lm.play_count) as views,
-    a.storage_key as primary_asset_key, a.asset_kind as primary_asset_kind,
+    a.primary_asset_key, a.primary_asset_kind, coalesce(a.assets, '[]'::jsonb) as assets,
     cr.handle, cr.display_name, cr.profile_storage_key, lc.follower_count
   from report_content c
   join project p on p.id = c.project_id
@@ -210,8 +211,13 @@ content_set as (
   left join report_creators cr on cr.id = c.creator_id
   left join latest_creator lc on lc.creator_id = cr.id
   left join lateral (
-    select storage_key, asset_kind from report_content_assets ca
-    where ca.content_id = c.id order by position asc limit 1
+    select
+      (array_agg(storage_key order by position))[1] as primary_asset_key,
+      (array_agg(asset_kind order by position))[1] as primary_asset_kind,
+      jsonb_agg(jsonb_build_object(
+        'storageKey', storage_key, 'assetKind', asset_kind, 'position', position
+      ) order by position) as assets
+    from report_content_assets ca where ca.content_id = c.id
   ) a on true
   where p_include_all or coalesce(r.decision, 'pending') = 'relevant'
 ),
@@ -276,7 +282,9 @@ select jsonb_build_object(
     'followers', follower_count, 'platform', platform, 'sourceType', source_type,
     'mediaType', media_type, 'shortcode', shortcode, 'caption', caption, 'permalink', permalink,
     'publishedAt', published_at, 'decision', decision, 'assetKey', primary_asset_key,
-    'assetKind', primary_asset_kind, 'likes', like_count, 'comments', comment_count,
+    'assetKind', primary_asset_kind, 'assets', assets, 'sourceClassification', source_classification,
+    'classificationReason', classification_reason, 'reviewNotes', review_notes,
+    'likes', like_count, 'comments', comment_count,
     'shares', share_count, 'saves', save_count, 'views', views
   ) order by published_at desc) from content_set), '[]'::jsonb),
   'benchmarks', (select value from benchmark_payload),

@@ -120,6 +120,9 @@ async function proxyMedia(req, res, key) {
     if (object.ContentRange) headers['Content-Range'] = object.ContentRange;
     if (object.ETag) headers.ETag = object.ETag;
     res.writeHead(range ? 206 : 200, headers);
+    if (req.method === 'HEAD') { object.Body.destroy(); return res.end(); }
+    object.Body.on('error', () => { if (!res.headersSent) sendJson(res, 502, { error:'media stream unavailable' }); else res.destroy(); });
+    req.on('aborted', () => object.Body.destroy());
     object.Body.pipe(res);
   } catch (error) {
     sendJson(res, error.name === 'NoSuchKey' ? 404 : 502, { error:'media unavailable' });
@@ -139,7 +142,7 @@ async function handler(req, res) {
       let body=''; for await (const chunk of req) { body += chunk; if (body.length > 65536) throw new Error('Request too large'); }
       return sendJson(res, 200, await saveReview(JSON.parse(body || '{}'), identity.email));
     }
-    if (pathname.startsWith('/media/') && req.method === 'GET') return proxyMedia(req, res, pathname.slice('/media/'.length));
+    if (pathname.startsWith('/media/') && (req.method === 'GET' || req.method === 'HEAD')) return proxyMedia(req, res, pathname.slice('/media/'.length));
     if (pathname === '/Hottest_Brunch' || pathname === '/Hottest_Brunch/' || pathname === '/Hottest_Brunch/admin' || pathname === '/Hottest_Brunch/admin/') return serveFile(res, path.join(REPORT_DIR,'index.html'));
     if (pathname.startsWith('/Hottest_Brunch/')) {
       const relative = pathname.slice('/Hottest_Brunch/'.length).replace(/^admin\//,'');

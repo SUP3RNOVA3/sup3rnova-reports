@@ -1,0 +1,52 @@
+.review-queue-pager {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+
+.review-queue-pager button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 8px;
+  padding: 7px 9px;
+  font: 700 8px Manrope;
+  cursor: pointer;
+}
+
+.review-queue-pager button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.review-queue-pager span {
+  font: 700 8px Manrope;
+  color: #7f8797;
+}
+
+@media (max-width: 760px) {
+  .review-list {
+    display: block;
+    max-height: 310px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .review-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 62px minmax(0, 1fr);
+    border-right: 0;
+  }
+
+  .review-queue-pager {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+  }
+}

@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=live-data-1">
+  <link rel="stylesheet" href="./styles.css?v=review-stability-1">
+  <link rel="stylesheet" href="./review.css?v=review-stability-1">
 </head>
 <body>
   <div class="app-shell">
@@ -129,13 +130,25 @@
       </section>
 
       <section class="view" id="view-review">
-        <div class="page-title"><div><span>ADMIN WORKSPACE</span><h1>Review what counts.</h1><p>Approve, hold or discard scraped content before it enters client-facing totals.</p></div><div class="review-progress"><strong id="reviewedCount">0</strong><span>reviewed this session</span></div></div>
-        <div class="review-toolbar"><div><button class="active">Pending <b id="pendingCount">8</b></button><button>Maybe <b>2</b></button><button>Discarded <b>43</b></button></div><span>Decisions are reversible and audited in production.</span></div>
-        <div class="review-list" id="reviewList"></div>
+        <div class="page-title"><div><span>ADMIN WORKSPACE</span><h1>Review what counts.</h1><p>Inspect each piece at full size, then approve, hold or discard it. Saving advances to the next item.</p></div><div class="review-progress"><strong id="reviewedCount">0</strong><span>classified pieces</span></div></div>
+        <div class="review-toolbar">
+          <div class="review-tabs" id="reviewTabs">
+            <button class="active" data-review-filter="pending">Pending <b id="pendingCount">0</b></button>
+            <button data-review-filter="maybe">Maybe <b id="maybeCount">0</b></button>
+            <button data-review-filter="relevant">Relevant <b id="relevantCount">0</b></button>
+            <button data-review-filter="discarded">Discarded <b id="discardedCount">0</b></button>
+          </div>
+          <label class="review-search">⌕ <input id="reviewSearch" placeholder="Search creator or caption"></label>
+        </div>
+        <div class="review-workspace">
+          <aside class="review-queue"><div class="review-queue-head"><strong id="reviewQueueTitle">Pending queue</strong><span id="reviewQueueCount">0 pieces</span></div><div class="review-list" id="reviewList"></div></aside>
+          <section class="review-focus" id="reviewFocus"><div class="review-empty">Select a piece to review.</div></section>
+        </div>
       </section>
     </main>
   </div>
+  <div class="media-modal" id="mediaModal" aria-hidden="true"><button class="media-modal-close" aria-label="Close media viewer">×</button><button class="media-modal-nav prev" data-modal-nav="-1" aria-label="Previous asset">←</button><div class="media-modal-content" id="mediaModalContent"></div><button class="media-modal-nav next" data-modal-nav="1" aria-label="Next asset">→</button></div>
   <div class="toast" id="toast"></div>
-  <script src="./app.js?v=live-data-1"></script>
+  <script src="./app.js?v=review-stability-1"></script>
 </body>
 </html>
