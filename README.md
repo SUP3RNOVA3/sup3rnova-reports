@@ -40,3 +40,7 @@ reports.sup3rnova.com/
 ```
 
 See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the proposed information architecture and data model.
+
+## FEMBi YTD 2026
+
+Public client report: `/FEMBi/YTD-2026/`. Approved snapshot report, not live ad-platform access. HeroUI branding uses client-supplied FEMBi logo and SUP3RNOVA wordmark. Only a fixed asset manifest is stored in this repository; client report data and bundled assets are kept in the existing private R2 bucket and streamed through an allowlisted route. No listing or arbitrary object access. HTML is no-cache; hashed JS/CSS immutable; noindex/nofollow on all report responses. Existing Hottest Brunch routes and moderation policies are unchanged.

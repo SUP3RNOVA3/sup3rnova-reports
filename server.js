@@ -9,6 +9,8 @@ const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
 const PORT = Number(process.env.PORT || 3000);
 const ROOT = __dirname;
 const REPORT_DIR = path.join(ROOT, 'Hottest_Brunch');
+const FEMBI_PREFIX = '/FEMBi/YTD-2026/';
+const FEMBI_FILES = require('./fembi-manifest.json');
 const SUPABASE_URL = String(process.env.SUPABASE_URL || '').replace(/\/$/, '');
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const R2_BUCKET = process.env.R2_BUCKET || 'sup3rnova-reports';
@@ -129,11 +131,40 @@ async function proxyMedia(req, res, key) {
   }
 }
 
+// Fixed, versioned report assets only. The dataset remains in private R2, not Git.
+async function serveFembi(req, res, filename) {
+  if (!Object.hasOwn(FEMBI_FILES, filename)) return sendJson(res, 404, { error:'not found' });
+  const asset = FEMBI_FILES[filename];
+  try {
+    const object = await s3.send(new GetObjectCommand({ Bucket:R2_BUCKET, Key:asset.key }));
+    const headers = {
+      'Content-Type':asset.type,
+      'Cache-Control':filename === 'index.html' ? 'no-cache' : 'public, max-age=31536000, immutable',
+      'X-Robots-Tag':'noindex, nofollow',
+      'X-Content-Type-Options':'nosniff',
+      'X-Frame-Options':'SAMEORIGIN',
+      'Referrer-Policy':'no-referrer',
+      'Content-Security-Policy':"default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'none'; frame-ancestors 'self'",
+    };
+    if (object.ContentLength != null) headers['Content-Length'] = object.ContentLength;
+    if (object.ETag) headers.ETag = object.ETag;
+    res.writeHead(200, headers);
+    if (req.method === 'HEAD') { object.Body.destroy(); return res.end(); }
+    object.Body.on('error', () => res.destroy());
+    req.on('aborted', () => object.Body.destroy());
+    object.Body.pipe(res);
+  } catch (error) {
+    sendJson(res, error.name === 'NoSuchKey' ? 404 : 502, { error:'report unavailable' });
+  }
+}
+
 async function handler(req, res) {
   const url = new URL(req.url, 'http://localhost');
   const pathname = decodeURIComponent(url.pathname);
   try {
     if (pathname === '/healthz') return sendJson(res, 200, { ok:true, service:'sup3rnova-reports' });
+    if (pathname === '/FEMBi/YTD-2026') { res.writeHead(302,{Location:FEMBI_PREFIX}); return res.end(); }
+    if (pathname.startsWith(FEMBI_PREFIX) && (req.method === 'GET' || req.method === 'HEAD')) return serveFembi(req, res, pathname.slice(FEMBI_PREFIX.length) || 'index.html');
     if (pathname === '/') { res.writeHead(302,{Location:'/Hottest_Brunch/'}); return res.end(); }
     if (pathname === '/api/report/hottest-brunch' && req.method === 'GET') return sendJson(res, 200, await supabaseRpc(false));
     if (pathname === '/Hottest_Brunch/admin/api/data' && req.method === 'GET') { await verifyAccess(req); return sendJson(res, 200, await supabaseRpc(true)); }
